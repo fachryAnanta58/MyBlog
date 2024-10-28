@@ -1,0 +1,23 @@
+.container {
+    display: flex;
+    align-items: stretch; /* Menjaga agar semua elemen di dalam container memiliki tinggi yang sama */
+    gap: 20px; /* Spasi antara elemen */
+    margin: 20px;
+    flex-direction: column;
+}
+.text, .image {
+    flex: 1;
+}
+.image img {
+    width: 100%; /* Menyesuaikan lebar gambar dengan kontainer */
+    height: auto; /* Menjaga rasio aspek gambar */
+}
+.text {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#h2 {
+    align-content: center;
+}

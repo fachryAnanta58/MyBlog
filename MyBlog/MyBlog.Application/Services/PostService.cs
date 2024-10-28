@@ -3,17 +3,20 @@ namespace MyBlog.Application.Services;
 using Domain.Interfaces;
 using Domain.Models;
 
-public class PostService
+public class PostService(IPostRepository postRepository, IProfileRepository profileRepository)
 {
-  private readonly IPostRepository _postRepository;
-  
-  public PostService( IPostRepository postRepository )
-  {
-    _postRepository = postRepository;
-  }
-  
   public async Task<IEnumerable<Post>> GetAllPostsAsync()
   {
-    return await _postRepository.GetAllAsync();
+    return await postRepository.GetAllAsync();
+  }
+
+  public async Task CreatePostAsync( Post post )
+  {
+    await postRepository.AddAsync( post );
+  }
+
+  public async Task<Post?> GetPostByIdAsync(int id)
+  {
+    return await postRepository.GetByIdAsync(id);
   }
 }

@@ -1,0 +1,17 @@
+@model MyBlog.Domain.Models.Post
+
+@{
+ViewBag.Title = "Post Details";
+Layout = "_Layout";
+}
+
+@* <h2>@Model.Title</h2> *@
+@* <p>@Model.Content</p> *@
+
+<div class="head" style="text-align: center">
+    <h2>@Model.Title</h2>
+</div>
+
+<div class="content">
+    <p>@Model.Content</p>
+</div>

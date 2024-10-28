@@ -3,15 +3,23 @@
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
+    var contentPreviewLimit = 50;
 }
 
 <h2>Post</h2>
 
-@foreach (var item in Model)
-{
-    <div>
-        <h4>@item.Title</h4>
-        <p>@item.Content</p>
-    </div>
-}
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New Post</a>
+</p>
 
+<div class="post-container">
+    @foreach (var item in Model)
+    {
+        <div class="post">
+            <a asp-action="Details" asp-route-id="@item.Id">
+                <h4>@item.Title</h4>
+                <p>@(item.Content.Length > contentPreviewLimit ? item.Content.Substring(0, contentPreviewLimit) + "..." : item.Content)</p>
+            </a>
+        </div>
+    }
+</div>

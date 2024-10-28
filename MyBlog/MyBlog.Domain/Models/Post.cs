@@ -1,3 +1,5 @@
+using System.Runtime.Serialization;
+
 namespace MyBlog.Domain.Models;
 
 using System.ComponentModel.DataAnnotations.Schema;

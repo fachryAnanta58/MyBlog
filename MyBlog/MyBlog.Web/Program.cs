@@ -45,6 +45,7 @@ public static class Program
         var dbContextFactory = new MyBlogDbContextFactory( connectionString );
         
         builder.Services.AddSingleton<IPostRepository>( new PostRepository( dbContextFactory ) );
+        builder.Services.AddSingleton<IProfileRepository>( new ProfileRepository( dbContextFactory ) );
         builder.Services.AddScoped<PostService>();
     }
 }
