@@ -25,4 +25,9 @@ public class PostService(IPostRepository postRepository, IProfileRepository prof
   {
     return await postRepository.GetByIdAsync(id);
   }
+
+  public async Task DeletePostAsync(int id)
+  {
+    await postRepository.DeleteAsync(id);
+  }
 }

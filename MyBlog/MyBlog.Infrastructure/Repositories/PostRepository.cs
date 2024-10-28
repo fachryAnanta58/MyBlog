@@ -28,4 +28,18 @@ public class PostRepository(MyBlogDbContextFactory contextFactory) : IPostReposi
     context.Posts.Add(post);
     await context.SaveChangesAsync();
   }
+
+  public async Task DeleteAsync(int id)
+  {
+    await using var context = contextFactory.Create();
+
+    var post = await context.Posts.FindAsync(id);
+    if (post == null)
+    {
+      return;
+    }
+
+    context.Posts.Remove(post);
+    await context.SaveChangesAsync();
+  }
 }

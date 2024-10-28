@@ -40,6 +40,19 @@ public class PostController( PostService postService ) : Controller
   }
 
   [HttpPost]
+  public async Task<IActionResult> Delete(int id)
+  {
+    var post = await postService.GetPostByIdAsync(id);
+    if (post == null)
+    {
+      return NotFound();
+    }
+    await postService.DeletePostAsync(id);
+
+    return RedirectToAction(nameof(Index));
+  }
+
+  [HttpPost]
   public IActionResult UploadImage(IFormFile file)
   {
     if (file.Length <= 0)
