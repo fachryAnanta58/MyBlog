@@ -101,6 +101,7 @@ public class MyBlogDbContext : DbContext
       {
         Id = -1,
         Title = "My First Post",
+        Subtitle = "This is my first post",
         Content = "This is my first seed post",
         ProfileId = -1
       },
@@ -108,6 +109,7 @@ public class MyBlogDbContext : DbContext
       {
         Id = -2,
         Title = "My Second Post",
+        Subtitle = "This is my second post",
         Content = "This is my second seed post",
         ProfileId = -1
       }
