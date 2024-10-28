@@ -30,4 +30,9 @@ public class PostService(IPostRepository postRepository, IProfileRepository prof
   {
     await postRepository.DeleteAsync(id);
   }
+
+  public async Task UpdatePostAsync(Post post)
+  {
+    await postRepository.UpdateAsync(post);
+  }
 }

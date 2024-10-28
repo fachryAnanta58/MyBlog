@@ -42,4 +42,19 @@ public class PostRepository(MyBlogDbContextFactory contextFactory) : IPostReposi
     context.Posts.Remove(post);
     await context.SaveChangesAsync();
   }
+
+  public async Task UpdateAsync(Post post)
+  {
+    await using var context = contextFactory.Create();
+
+    var existingPost = await context.Posts.FindAsync(post.Id);
+    if (existingPost == null)
+    {
+      return;
+    }
+
+    context.Entry(existingPost).State = EntityState.Detached;
+    context.Posts.Update(post);
+    await context.SaveChangesAsync();
+  }
 }

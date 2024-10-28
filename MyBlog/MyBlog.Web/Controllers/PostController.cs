@@ -75,4 +75,23 @@ public class PostController( PostService postService ) : Controller
     var imageUrl = Url.Content($"~/uploads/{fileName}");
     return Json(new { location = imageUrl });
   }
+
+  [HttpGet]
+  public async Task<IActionResult> Edit(int id)
+  {
+    var post = await postService.GetPostByIdAsync(id);
+    if (post == null)
+    {
+      return NotFound();
+    }
+
+    return View(post);
+  }
+
+  [HttpPost]
+  public async Task<IActionResult> Edit(Post post)
+  {
+    await postService.UpdatePostAsync(post);
+    return RedirectToAction(nameof(Index));
+  }
 }

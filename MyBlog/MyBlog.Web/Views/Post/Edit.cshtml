@@ -1,38 +1,49 @@
 @model MyBlog.Domain.Models.Post
 
 @{
-    ViewBag.Title = "Create New Post";
+    ViewBag.Title = "Edit Post";
     Layout = "_Layout";
 }
 
-<h2>Create New Post</h2>
+<h2>Edit Post</h2>
 
-<form asp-action="Create" method="post">
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
     <div class="form-group">
         <label asp-for="Title" class="control-label"></label>
-        <input asp-for="Title" class="form-control" />
+        <input asp-for="Title" class="form-control"/>
         <span asp-validation-for="Title" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Content" class="control-label"></label>
-        <textarea id="postContent" asp-for="Content" class="form-control"></textarea>
+        <textarea asp-for="Content" class="form-control" id="content-editor"></textarea>
         <span asp-validation-for="Content" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <input type="submit" value="Create" class="btn btn-primary" />
+        <input type="submit" value="Save" class="btn btn-primary"/>
     </div>
+
+</form>
+
+<form asp-action="Delete" asp-route-id="@Model.Id" onsubmit="return confirmDelete()">
+    <button type="submit" class="btn btn-danger">Delete</button>
 </form>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="~/lib/tinymce/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
-            selector: '#postContent',
+            selector: '#content-editor',
             license_key: 'gpl',
             plugins: 'link image code',
             toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code',
             images_upload_url: '/Post/UploadImage'
         });
+    </script>
+
+    <script type="text/javascript">
+        function confirmDelete() {
+            return confirm("Are you sure you want to delete this post?");
+        }
     </script>
 }
