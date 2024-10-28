@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using HtmlAgilityPack;
 
 namespace MyBlog.Application.Services;
 
@@ -14,10 +15,9 @@ public class PostService(IPostRepository postRepository, IProfileRepository prof
 
   public async Task CreatePostAsync( Post post )
   {
-    var html = post.Content;
-    // replace ../uploads/ with /uploads/
-    html = Regex.Replace(html, @"(\.\.\/uploads\/)", "/uploads/");
-    post.Content = html;
+    post.Content = ReplaceImgSrc(post.Content, out var firstImgSrc);
+    post.ImagePreview = firstImgSrc;
+
     await postRepository.AddAsync( post );
   }
 
@@ -34,5 +34,29 @@ public class PostService(IPostRepository postRepository, IProfileRepository prof
   public async Task UpdatePostAsync(Post post)
   {
     await postRepository.UpdateAsync(post);
+  }
+
+  private string ReplaceImgSrc(string html, out string? firstImgSrc)
+  {
+    firstImgSrc = null;
+    var htmlDoc = new HtmlDocument();
+    htmlDoc.LoadHtml(html);
+
+    var imgNodes = htmlDoc.DocumentNode.SelectNodes("//img");
+    if (imgNodes == null)
+    {
+      return html;
+    }
+
+    foreach (var imgNode in imgNodes)
+    {
+      var imgSrc = imgNode.GetAttributeValue("src", "");
+      imgSrc = imgSrc.Replace("../uploads/", "/uploads/");
+      imgNode.SetAttributeValue("src", imgSrc);
+    }
+
+    firstImgSrc = imgNodes.FirstOrDefault()?.GetAttributeValue("src", "");
+
+    return htmlDoc.DocumentNode.OuterHtml;
   }
 }

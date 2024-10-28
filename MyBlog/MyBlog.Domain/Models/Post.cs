@@ -8,6 +8,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 public class Post : ModelBase
 {
   public string Title { get; set; }
+  public string Subtitle { get; set; }
+  public string? ImagePreview { get; set; }
   public string Content { get; set; }
   
   [ForeignKey("Profile")]

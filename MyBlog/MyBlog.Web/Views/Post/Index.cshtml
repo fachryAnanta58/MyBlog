@@ -15,10 +15,16 @@
 <div class="post-container">
     @foreach (var item in Model)
     {
-        <div class="post">
-            <a asp-action="Details" asp-route-id="@item.Id">
+    <div class="post">
+        <a asp-action="Details" asp-route-id="@item.Id" class="post-link">
+            <div class="post-content">
                 <h4>@item.Title</h4>
-            </a>
-        </div>
+                <p>@item.Subtitle</p>
+            </div>
+            <div class="post-image">
+                <img src="@(!string.IsNullOrEmpty(item.ImagePreview) ? item.ImagePreview : "/uploads/blank-image.jpg")" alt="Image preview" />
+            </div>
+        </a>
+    </div>
     }
 </div>

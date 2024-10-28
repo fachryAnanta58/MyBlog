@@ -15,8 +15,13 @@
         <span asp-validation-for="Title" class="text-danger"></span>
     </div>
     <div class="form-group">
+        <label asp-for="Subtitle" class="control-label"></label>
+        <input asp-for="Subtitle" class="form-control"/>
+        <span asp-validation-for="Subtitle" class="text-danger"></span>
+    </div>
+    <div class="form-group">
         <label asp-for="Content" class="control-label"></label>
-        <textarea asp-for="Content" class="form-control" id="content-editor"></textarea>
+        <textarea id="content-editor" asp-for="Content" class="form-control"></textarea>
         <span asp-validation-for="Content" class="text-danger"></span>
     </div>
     <div class="form-group">
@@ -37,8 +42,28 @@
             license_key: 'gpl',
             plugins: 'link image code',
             toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code',
-            images_upload_url: '/Post/UploadImage'
-        });
+            images_upload_url: '/Post/UploadImage',
+            image_dimensions: false,
+            setup: function (editor) {
+                editor.on('init', function(args) {
+                    editor = args.target;
+
+                    editor.on('NodeChange', function(e) {
+                        if (e && e.element.nodeName.toLowerCase() === 'img') {
+                            let maxWidth = 1000;
+                            let width = e.element.width;
+                            let height = e.element.height;
+                            if (width > 0 && height > 0) {
+                                if (width > maxWidth) {
+                                    height = height / (width / maxWidth);
+                                    width = maxWidth;
+                                }
+                                tinyMCE.DOM.setAttribs(e.element, {'width': width, 'height': height});
+                            }
+                        }
+                    });
+                });
+            }});
     </script>
 
     <script type="text/javascript">

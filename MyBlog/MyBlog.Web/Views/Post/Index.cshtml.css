@@ -21,3 +21,25 @@
 #h2 {
     align-content: center;
 }
+
+.post {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.post-link {
+    display: flex;
+    text-decoration: none;
+    color: inherit;
+}
+
+.post-content {
+    flex: 1;
+}
+
+.post-image img {
+    width: 100px;
+    height: auto;
+    margin-left: 20px;
+}
