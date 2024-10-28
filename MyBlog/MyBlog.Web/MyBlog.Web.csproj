@@ -21,10 +21,15 @@
 
     <ItemGroup>
       <Folder Include="Pages\" />
+      <Folder Include="wwwroot\uploads\" />
     </ItemGroup>
 
     <ItemGroup>
       <AdditionalFiles Include="Views\Post\Index.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="TinyMCE" Version="7.4.1" />
     </ItemGroup>
 
 </Project>

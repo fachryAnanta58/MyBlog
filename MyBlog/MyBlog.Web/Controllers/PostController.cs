@@ -38,4 +38,28 @@ public class PostController( PostService postService ) : Controller
     }
     return View(post);
   }
+
+  [HttpPost]
+  public IActionResult UploadImage(IFormFile file)
+  {
+    if (file.Length <= 0)
+      return BadRequest();
+
+    if (!Directory.Exists("wwwroot/uploads"))
+    {
+      Directory.CreateDirectory("wwwroot/uploads");
+    }
+
+    var date = DateTime.Now.ToString("yyyyMMddHHmmss");
+    var filePath = Path.Combine("wwwroot/uploads", $"{date}_{file.FileName}");
+    var fileName = Path.GetFileName(filePath);
+
+    using (var stream = new FileStream(filePath, FileMode.Create))
+    {
+      file.CopyTo(stream);
+    }
+
+    var imageUrl = Url.Content($"~/uploads/{fileName}");
+    return Json(new { location = imageUrl });
+  }
 }

@@ -1,3 +1,5 @@
+using System.Text.RegularExpressions;
+
 namespace MyBlog.Application.Services;
 
 using Domain.Interfaces;
@@ -12,6 +14,10 @@ public class PostService(IPostRepository postRepository, IProfileRepository prof
 
   public async Task CreatePostAsync( Post post )
   {
+    var html = post.Content;
+    // replace ../uploads/ with /uploads/
+    html = Regex.Replace(html, @"(\.\.\/uploads\/)", "/uploads/");
+    post.Content = html;
     await postRepository.AddAsync( post );
   }
 

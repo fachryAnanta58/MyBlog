@@ -18,7 +18,6 @@
         <div class="post">
             <a asp-action="Details" asp-route-id="@item.Id">
                 <h4>@item.Title</h4>
-                <p>@(item.Content.Length > contentPreviewLimit ? item.Content.Substring(0, contentPreviewLimit) + "..." : item.Content)</p>
             </a>
         </div>
     }
