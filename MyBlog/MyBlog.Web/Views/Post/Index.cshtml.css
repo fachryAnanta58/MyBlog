@@ -11,12 +11,14 @@
     align-items: center;
     gap: 1rem;
     justify-content: space-between;
-    border-bottom: 1px solid #6c757d;
+    border-bottom: 1px solid #e9ecef;
     padding-bottom: 1rem;
     margin-bottom: 1rem;
+    text-decoration: none;
+    color: inherit;
 }
 .article img {
-    width: 100px;
+    width: 150px;
     height: 100px;
     object-fit: cover;
     border-radius: 5px;

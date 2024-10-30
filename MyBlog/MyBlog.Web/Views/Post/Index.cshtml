@@ -5,22 +5,18 @@
     Layout = "_Layout";
 }
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Create New Post</a>
-</p>
+<h2 style="text-align: center">Blog</h2>
+<a asp-action="Create" class="btn btn-primary">Create New Post</a>
 
-<div class="container my-5">
-    <h2>For you</h2>
-
-    @foreach (var item in Model)
-    {
-        <a asp-action="Details" asp-route-id="@item.Id" class="mb-4 article d-flex" style="color: inherit; text-decoration: none">
-            <div class="flex-grow-1">
-                <div class="article-title">@item.Title</div>
-                <div class="article-meta">@item.Created</div>
-                <p>@item.Subtitle</p>
-            </div>
-            <img class="ml-3" src="@(!string.IsNullOrEmpty(item.ImagePreview) ? item.ImagePreview : "/uploads/blank-image.jpg")" alt="Image preview" />
-        </a>
-    }
-</div>
+@foreach( var item in Model )
+{
+    <a asp-action="Details" asp-route-id="@item.Id" class="mb-4 article d-flex"
+       style="color: inherit; text-decoration: none; border-bottom: 1px solid #e9ecef; padding-bottom: 1rem;">
+        <div class="flex-grow-1">
+            <div class="article-title">@item.Title</div>
+            <div class="article-meta">@item.Created</div>
+            <p>@item.Subtitle</p>
+        </div>
+        <img class="ml-3" src="@(!string.IsNullOrEmpty( item.ImagePreview ) ? item.ImagePreview : "/uploads/blank.jpeg")" alt="Image preview"/>
+    </a>
+}

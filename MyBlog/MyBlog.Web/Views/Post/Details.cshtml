@@ -5,13 +5,11 @@ ViewBag.Title = "Post Details";
 Layout = "_Layout";
 }
 
-<div class="head" style="text-align: center; position: relative">
-    <h2>@Model.Title</h2>
-    <h4>@Model.Subtitle</h4>
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Update</a>
 
-    <form asp-action="Edit" asp-route-id="@Model.Id" method="get" style="position: absolute; top: 0; right: 0;">
-        <button type="submit" class="btn btn-primary">Update</button>
-    </form>
+<div style="text-align: center; position: relative">
+    <h2>@Model.Title</h2>
+    <p>@Model.Subtitle</p>
 </div>
 
 <div class="content">

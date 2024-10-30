@@ -5,10 +5,11 @@
     Layout = "_Layout";
 }
 
-<h2>Edit Post</h2>
+<h2 style="text-align: center">Edit Post</h2>
 
 <form asp-action="Edit" method="post">
     <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
+    <input type="hidden" asp-for="ImagePreview" value="@Model.ImagePreview"/>
     <div class="form-group">
         <label asp-for="Title" class="control-label"></label>
         <input asp-for="Title" class="form-control"/>
@@ -40,7 +41,7 @@
         tinymce.init({
             selector: '#content-editor',
             license_key: 'gpl',
-            plugins: 'link image code',
+            plugins: 'link image code autoresize',
             toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code',
             images_upload_url: '/Post/UploadImage',
             image_dimensions: false,

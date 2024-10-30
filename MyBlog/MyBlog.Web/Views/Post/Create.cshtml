@@ -5,7 +5,7 @@
     Layout = "_Layout";
 }
 
-<h2>Create New Post</h2>
+<h2 style="text-align: center">Create New Post</h2>
 
 <form asp-action="Create" method="post">
     <div class="form-group">
@@ -35,7 +35,7 @@
         tinymce.init({
             selector: '#content-editor',
             license_key: 'gpl',
-            plugins: 'link image code',
+            plugins: 'link image code autoresize',
             toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code',
             images_upload_url: '/Post/UploadImage',
             image_dimensions: false,
