@@ -66,7 +66,9 @@ public class MyBlogDbContext : DbContext
       Description = "Developing software",
       StartDate = new DateTime( 2021, 1, 1 ),
       Tags = new List<string> { "C#", "ASP.NET Core", "Entity Framework Core" },
-      ProfileId = -1
+      ProfileId = -1,
+      Created = new DateTime( 2023, 5, 8, 0, 0, 0, 0, DateTimeKind.Local ),
+      Updated = new DateTime( 2023, 5, 8, 0, 0, 0, 0, DateTimeKind.Local ),
     };
     
     var project = new Project
@@ -81,7 +83,9 @@ public class MyBlogDbContext : DbContext
       Technologies = new List<string> { "C#", "ASP.NET Core", "Entity Framework Core" },
       Features = new List<string> { "Feature 1", "Feature 2", "Feature 3" },
       Screenshots = new List<string> { "screenshot1.jpg", "screenshot2.jpg", "screenshot3.jpg" },
-      ProfileId = -1
+      ProfileId = -1,
+      Created = new DateTime( 2023, 5, 8, 0, 0, 0, 0, DateTimeKind.Local ),
+      Updated = new DateTime( 2023, 5, 8, 0, 0, 0, 0, DateTimeKind.Local ),
     };
 
     var profile = new Profile
@@ -92,7 +96,9 @@ public class MyBlogDbContext : DbContext
       ProfilePicture = "profile.jpg",
       Email = "fachry.ananta18@gmail.com",
       PhoneNumber = "081234567890",
-      Skills = new List<string> { "C#", "ASP.NET Core", "Entity Framework Core" }
+      Skills = new List<string> { "C#", "ASP.NET Core", "Entity Framework Core" },
+      Created = new DateTime( 2023, 5, 8, 0, 0, 0, 0, DateTimeKind.Local ),
+      Updated = new DateTime( 2023, 5, 8, 0, 0, 0, 0, DateTimeKind.Local ),
     };
 
     var posts = new List<Post>
@@ -103,7 +109,8 @@ public class MyBlogDbContext : DbContext
         Title = "My First Post",
         Subtitle = "This is my first post",
         Content = "This is my first seed post",
-        ProfileId = -1
+        ProfileId = -1,
+        Created = new DateTime( 2023, 5, 8, 0, 0, 0, 0, DateTimeKind.Local ), Updated = new DateTime( 2023, 5, 8, 0, 0, 0, 0, DateTimeKind.Local ),
       },
       new()
       {
@@ -111,7 +118,9 @@ public class MyBlogDbContext : DbContext
         Title = "My Second Post",
         Subtitle = "This is my second post",
         Content = "This is my second seed post",
-        ProfileId = -1
+        ProfileId = -1,
+        Created = new DateTime( 2023, 5, 8, 0, 0, 0, 0, DateTimeKind.Local ),
+        Updated = new DateTime( 2023, 5, 8, 0, 0, 0, 0, DateTimeKind.Local ),
       }
     };
     
