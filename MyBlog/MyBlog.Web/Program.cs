@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
 namespace MyBlog;
 
 using Application.Services;
@@ -35,15 +38,25 @@ public static class Program
             pattern: "{controller=Home}/{action=Index}/{id?}");
 
         app.Run();
+
+        app.UseAuthentication();
+        app.UseAuthorization();
     }
     
     private static void ConfigureBuilder( WebApplicationBuilder builder )
     {
+        var connectionString = builder.Configuration.GetConnectionString( "SqliteConnection" );
+
+        builder.Services.AddDbContext<MyBlogDbContext>( options => options.UseSqlite( connectionString ) );
+
+        builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+            .AddEntityFrameworkStores<MyBlogDbContext>()
+            .AddDefaultTokenProviders();
+
         builder.Services.AddControllersWithViews();
 
-        var connectionString = builder.Configuration.GetConnectionString( "SqliteConnection" );
         var dbContextFactory = new MyBlogDbContextFactory( connectionString );
-        
+
         builder.Services.AddSingleton<IPostRepository>( new PostRepository( dbContextFactory ) );
         builder.Services.AddSingleton<IProfileRepository>( new ProfileRepository( dbContextFactory ) );
         builder.Services.AddScoped<PostService>();

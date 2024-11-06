@@ -16,6 +16,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\MyBlog.Application\MyBlog.Application.csproj" />
+      <ProjectReference Include="..\MyBlog.Infrastructure.Identity\MyBlog.Infrastructure.Identity.csproj" />
       <ProjectReference Include="..\MyBlog.Infrastructure\MyBlog.Infrastructure.csproj" />
     </ItemGroup>
 
@@ -25,6 +26,8 @@
     </ItemGroup>
 
     <ItemGroup>
+      <AdditionalFiles Include="Views\Account\Login.cshtml" />
+      <AdditionalFiles Include="Views\Account\Register.cshtml" />
       <AdditionalFiles Include="Views\Post\Index.cshtml" />
     </ItemGroup>
 
