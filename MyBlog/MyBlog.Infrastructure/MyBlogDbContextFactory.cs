@@ -14,6 +14,10 @@ public class MyBlogDbContextFactory
   
   public MyBlogDbContext Create()
   {
-    return new MyBlogDbContext( _connectionString );
+    var optionsBuilder = new DbContextOptionsBuilder<MyBlogDbContext>()
+      .UseSqlite(_connectionString)
+      .Options;
+
+    return new MyBlogDbContext( optionsBuilder );
   }
 }

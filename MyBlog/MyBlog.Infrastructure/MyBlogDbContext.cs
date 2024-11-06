@@ -1,9 +1,12 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
 namespace MyBlog.Infrastructure;
 
 using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-public class MyBlogDbContext : DbContext
+public class MyBlogDbContext : IdentityDbContext<IdentityUser>
 {
   private readonly string _connectionString;
 
@@ -11,9 +14,8 @@ public class MyBlogDbContext : DbContext
   {
     _connectionString = "Data Source=MyBlog.db";
   }
-  public MyBlogDbContext( string connectionString )
+  public MyBlogDbContext( DbContextOptions<MyBlogDbContext> options ) : base( options )
   {
-    _connectionString = connectionString;
   }
   
   public override int SaveChanges()
@@ -26,14 +28,11 @@ public class MyBlogDbContext : DbContext
 
     return base.SaveChanges();
   }
-  
-  protected override void OnConfiguring( DbContextOptionsBuilder optionsBuilder )
-  {
-    optionsBuilder.UseSqlite( _connectionString );
-  }
-  
+
   protected override void OnModelCreating( ModelBuilder modelBuilder )
   {
+    base.OnModelCreating(modelBuilder);
+
     modelBuilder.Entity<Post>().ToTable( "Posts" );
     modelBuilder.Entity<Profile>().ToTable( "Profiles" );
     modelBuilder.Entity<Experience>().ToTable( "Experiences" );
