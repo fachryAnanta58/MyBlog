@@ -8,14 +8,26 @@ using Microsoft.EntityFrameworkCore;
 
 public class MyBlogDbContext : IdentityDbContext<IdentityUser>
 {
-  private readonly string _connectionString;
+  private readonly string? _connectionString;
 
+  [Obsolete("For EF Core only", true)]
   public MyBlogDbContext()
   {
     _connectionString = "Data Source=MyBlog.db";
   }
   public MyBlogDbContext( DbContextOptions<MyBlogDbContext> options ) : base( options )
   {
+  }
+
+  protected override void OnConfiguring( DbContextOptionsBuilder optionsBuilder )
+  {
+    base.OnConfiguring(optionsBuilder);
+
+    // Code below for add migration and update database only
+    if ( _connectionString != null )
+    {
+      optionsBuilder.UseSqlite( _connectionString );
+    }
   }
   
   public override int SaveChanges()
@@ -127,6 +139,21 @@ public class MyBlogDbContext : IdentityDbContext<IdentityUser>
     modelBuilder.Entity<Experience>().HasData( experience );
     modelBuilder.Entity<Project>().HasData( project );
     modelBuilder.Entity<Post>().HasData( posts );
+
+    // Seed Identity Roles
+    var adminRole = new IdentityRole
+    {
+      Id = "1",
+      Name = "Admin",
+      NormalizedName = "ADMIN"
+    };
+    var userRole = new IdentityRole
+    {
+      Id = "2",
+      Name = "User",
+      NormalizedName = "USER"
+    };
+    modelBuilder.Entity<IdentityRole>().HasData( adminRole, userRole );
   }
   
   public DbSet<Post> Posts { get; set; }

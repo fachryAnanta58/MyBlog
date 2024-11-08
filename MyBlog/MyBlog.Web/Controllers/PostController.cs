@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using MyBlog.Domain.Models;
 
 namespace MyBlog.Controllers;
@@ -16,12 +17,14 @@ public class PostController( PostService postService ) : Controller
   }
 
   [HttpGet]
+  [Authorize(Roles="Admin")]
   public IActionResult Create()
   {
     return View();
   }
 
   [HttpPost]
+  [Authorize(Roles="Admin")]
   public async Task<IActionResult> Create(Post post)
   {
     await postService.CreatePostAsync(post);
@@ -40,6 +43,7 @@ public class PostController( PostService postService ) : Controller
   }
 
   [HttpPost]
+  [Authorize(Roles="Admin")]
   public async Task<IActionResult> Delete(int id)
   {
     var post = await postService.GetPostByIdAsync(id);
@@ -53,6 +57,7 @@ public class PostController( PostService postService ) : Controller
   }
 
   [HttpPost]
+  [Authorize(Roles="Admin")]
   public IActionResult UploadImage(IFormFile file)
   {
     if (file.Length <= 0)
@@ -77,6 +82,7 @@ public class PostController( PostService postService ) : Controller
   }
 
   [HttpGet]
+  [Authorize(Roles="Admin")]
   public async Task<IActionResult> Edit(int id)
   {
     var post = await postService.GetPostByIdAsync(id);
@@ -89,6 +95,7 @@ public class PostController( PostService postService ) : Controller
   }
 
   [HttpPost]
+  [Authorize(Roles="Admin")]
   public async Task<IActionResult> Edit(Post post)
   {
     await postService.UpdatePostAsync(post);
