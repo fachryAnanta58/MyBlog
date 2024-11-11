@@ -5,7 +5,10 @@ ViewBag.Title = "Post Details";
 Layout = "_Layout";
 }
 
-<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Update</a>
+@if (User.IsInRole("Admin"))
+{
+    <a a sp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Update</a>
+}
 
 <div style="text-align: center; position: relative">
     <h2>@Model.Title</h2>
