@@ -1,19 +1,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using MyBlog.Domain.Models;
 
-public class AccountController : Controller
+namespace MyBlog.Controllers;
+
+public class AccountController( UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager ) : Controller
 {
-    private readonly UserManager<IdentityUser> _userManager;
-    private readonly SignInManager<IdentityUser> _signInManager;
-
-    public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
-    {
-        _userManager = userManager;
-        _signInManager = signInManager;
-    }
-
     [HttpGet]
     public IActionResult Register()
     {
@@ -26,12 +18,18 @@ public class AccountController : Controller
     {
         if (ModelState.IsValid)
         {
-            var user = new IdentityUser { UserName = model.Email, Email = model.Email };
-            var result = await _userManager.CreateAsync(user, model.Password);
+            var existingUser = await userManager.FindByEmailAsync(model.Email);
+            if (existingUser != null)
+            {
+                ModelState.AddModelError(string.Empty, "Email is already in use.");
+                return View(model);
+            }
+            
+            var user = new IdentityUser { UserName = model.Username, Email = model.Email };
+            var result = await userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
-                await _signInManager.SignInAsync(user, isPersistent: false);
-                return RedirectToAction("Index", "Home"); // Redirect ke halaman utama setelah registrasi
+                return RedirectToAction("Login"); // Redirect ke halaman utama setelah registrasi
             }
             foreach (var error in result.Errors)
             {
@@ -56,7 +54,7 @@ public class AccountController : Controller
             return View(model);
         }
 
-        var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+        var result = await signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, lockoutOnFailure: false);
 
         if (result.Succeeded)
         {
@@ -71,7 +69,7 @@ public class AccountController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Logout()
     {
-        await _signInManager.SignOutAsync();
+        await signInManager.SignOutAsync();
         return RedirectToAction("Index", "Home"); // Redirect ke halaman utama setelah logout
     }
 }

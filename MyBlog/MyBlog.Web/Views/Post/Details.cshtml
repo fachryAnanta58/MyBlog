@@ -7,7 +7,7 @@ Layout = "_Layout";
 
 @if (User.IsInRole("Admin"))
 {
-    <a a sp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Update</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Update</a>
 }
 
 <div style="text-align: center; position: relative">
