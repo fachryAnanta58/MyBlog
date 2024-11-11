@@ -490,4 +490,5 @@ $RECYCLE.BIN/
 
 MyBlog.Application/obj/*
 MyBlog.Web/bin/*
+MyBlog.Web/wwwroot/lib/*
 
