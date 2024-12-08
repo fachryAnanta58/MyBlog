@@ -10,7 +10,9 @@ public class PostService(IPostRepository postRepository, IProfileRepository prof
 {
   public async Task<IEnumerable<Post>> GetAllPostsAsync()
   {
-    return await postRepository.GetAllAsync();
+    var posts = await postRepository.GetAllAsync();
+
+    return posts.OrderByDescending(p => p.Created);
   }
 
   public async Task CreatePostAsync( Post post )
@@ -33,6 +35,9 @@ public class PostService(IPostRepository postRepository, IProfileRepository prof
 
   public async Task UpdatePostAsync(Post post)
   {
+    ReplaceImgSrc(post.Content, out var firstImgSrc);
+    post.ImagePreview = firstImgSrc;
+    
     await postRepository.UpdateAsync(post);
   }
 
